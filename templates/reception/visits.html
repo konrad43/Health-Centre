@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block header %}
+    <h1>{% block title %}Wizyty{% endblock %}</h1>
+{% endblock %}
+
+{% block content %}
+<table>
+    <tr>
+        <th>Lp.</th>
+        <th>Imię i nazwisko</th>
+        <th>Data</th>
+    </tr>
+    {% for visit in visits %}
+        <tr>
+            <td>{{ loop.index0 }}</td>
+            <td>{{ visit.name }}</td>
+            <td>{{ visit.date.strftime('%H:%M %d.%m.%Y') }}</td>
+            <td>{{ visit.date.strftime('%s') }}</td>
+        </tr>
+    {% endfor %}
+</table>
+<div>
+    <a href="{{ url_for('reception.add_appoint') }}">Dodaj wizytę</a>
+</div>
+<div><a href="{{ url_for('reception.search_data') }}">Szukaj</a></div>
+{% endblock %}

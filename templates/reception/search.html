@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+
+{% block header %}
+    <h1>{% block title %}Wizyty{% endblock %}</h1>
+{% endblock %}
+
+{% block content %}
+
+<div class="links">
+    <a href="{{ url_for('index') }}">Strona główna</a>
+</div>
+<div class="calendar">
+   <h2>Metoda GET</h2>
+    <form method="get">
+        <label for="start">Data początkowa:</label>
+        <input type="date" name="start_date" value="{{ start_date }}">
+        
+        <label for="start">Data końcowa:</label>
+        <input type="date" name="end_date" value="{{ end_date }}">
+        
+        <label for="name">Imię i nazwisko:</label>
+        <input type="text" name="name" value="{{ name }}">
+        <input type="submit" value="Szukaj">
+    </form>
+</div>
+
+<table>
+    <tr>
+        <th>Lp.</th>
+        <th>Imię i nazwisko</th>
+        <th>Data</th>
+    </tr>
+    {% for visit in visits %}
+        <tr>
+            <td>{{ loop.index0 }}</td>
+            <td>{{ visit.name }}</td>
+            <td>{{ visit.date.strftime('%H:%M %d.%m.%Y') }}</td>
+            <td>{{ visit.date }}</td>
+            
+        </tr>
+    {% endfor %}
+</table>
+
+{% endblock %}
