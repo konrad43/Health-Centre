@@ -1,0 +1,44 @@
+
+.top-nav{
+    background-color: #6ECEB2;
+}
+
+.left-nav {
+    border-right: 1px solid #e8e8e8;
+/*    background-color: #c7d4ea;*/
+    padding-top: 2em;
+    height: 1000px;
+    position: sticky;
+    position: -webkit-sticky;
+    top: 50px;
+}
+
+.spacer {
+    margin-bottom: 2em
+}
+
+.nav-space {
+    margin-top: 50px;
+}
+
+ul .nav-item {
+    border-bottom: 1px solid #eee;
+}
+
+ul .nav-item a {
+    color: #555;
+}
+
+ul .nav-item :hover {
+    background-color: #eee;
+}
+
+.active {
+    color: aliceblue;
+    background-color: #ddd;
+}
+/*
+.content-base {
+    overflow: scroll;
+    height: 1000px;
+}*/
