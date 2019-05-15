@@ -2,7 +2,7 @@ from flask import (
     Blueprint, abort, render_template, request, jsonify, redirect, url_for
 )
 from .db import db_session
-from .models import Base, Appointment
+from .models import Base, Appointment, Service, Doctor
 import datetime
 from sqlalchemy import func, and_
 
@@ -21,13 +21,15 @@ def index():
 
     else:
         visits = (
-            db_session.query(Appointment.name, Appointment.appointment_id, Appointment.date)
+            db_session.query(Appointment)
                 .all()
         )
-        print(visits[0][2].strftime('%H:%M %d.%m.%Y'))
-        return render_template('reception/visits.html', visits=visits)
+        # print(visits[0][2].strftime('%H:%M %d.%m.%Y'))
+        return render_template('reception/visits.html',
+                               visits=visits,
+                               page='home')
 
-@bp.route('/nowa_wizyta', methods=('GET', 'POST'))
+@bp.route('/nowa-wizyta', methods=('GET', 'POST'))
 def add_appoint():
     if request.method == 'POST':
         name = request.form['name']
@@ -41,22 +43,51 @@ def add_appoint():
             print('zapisano')
             return redirect(url_for('index'))
     else:
-        return render_template('reception/add_new.html')
+        doctor = request.args.get('doctor_name')
+        service = request.args.get('service')
+        data = ''
+
+        data_service = db_session.query(Service)
+        data_doctor = db_session.query(Doctor)
+
+        if doctor and service:
+            doc_id = data_doctor.filter(Doctor.doctor_name == doctor).first()
+            ser_id = data_service.filter(Service.name == service).first()
+            data = (
+                db_session.query(Appointment)
+                    .filter(and_(
+                        Appointment.doctor_id == doc_id.id,
+                        Appointment.service_id == ser_id.id
+                )).first()
+            )
+
+        return render_template('reception/add_new.html',
+                               data_doctor=data_doctor,
+                               data_service=data_service,
+                               doctor=doctor,
+                               service=service,
+                               data=data,
+                               page='add')
+
+@bp.route('/edytuj-cennik')
+def edit_pricelist():
+    pass
+
 
 @bp.route('/szukaj', methods=('GET', 'POST'))
 def search_data():
     if request.method == 'GET':
         name = request.args.get('name')
         dates = request.args
-        print(dates)
-        print('name: ', name)
+        # print(dates)
+        # print('name: ', name)
         start_date = date_to_datetime('start_date', 30)
-        print('start_date: ', start_date)
+        # print('start_date: ', start_date)
         try:
             end_date = date_to_datetime('end_date', -1)
-            print('end_date: ', end_date)
+            # print('end_date: ', end_date)
         except:
-            print('brak daty końcowej')
+            # print('brak daty końcowej')
             end_date = None
 
         if end_date:
@@ -74,12 +105,26 @@ def search_data():
             )
 
         if name:
-            data = data.filter(Appointment.name.like(f'{name}%'))
-        # print(data)
+            data = data.filter(Appointment.patient_name.like(f'{name}%'))
+        else:
+            name = ''
+
+
+        data_all = data.all()
+        patient_sum = len(data_all)
+        # print(data.first().price.price)
+        revenue = 0
+        for i in data_all:
+            revenue += i.price.price
+        # print('Przychód: ', revenue)
+
         return render_template('reception/search.html', visits=data,
                                start_date=dates.get('start_date'),
                                end_date=dates.get('end_date'),
-                               name=name)
+                               name=name,
+                               patient_sum=patient_sum,
+                               revenue=revenue,
+                               page='search')
 
     return render_template('reception/search.html')
 

@@ -1,27 +1,31 @@
 {% extends 'base.html' %}
 
+{% block content %}
 {% block header %}
     <h1>{% block title %}Wizyty{% endblock %}</h1>
 {% endblock %}
 
-{% block content %}
-<table>
+<!--table-hover-->
+<table class="table table-striped">
     <tr>
-        <th>Lp.</th>
-        <th>Imię i nazwisko</th>
-        <th>Data</th>
+        <td>Lp.</td>
+        <td>Imię i nazwisko</td>
+        <td>Data</td>
+        <td>Specjalista</td>
+        <td>Cena</td>
+        <td>Rodzaj usługi</td>
     </tr>
     {% for visit in visits %}
         <tr>
-            <td>{{ loop.index0 }}</td>
-            <td>{{ visit.name }}</td>
-            <td>{{ visit.date.strftime('%H:%M %d.%m.%Y') }}</td>
-            <td>{{ visit.date.strftime('%s') }}</td>
+            <td>{{ loop.index0 + 1 }}</td>
+            <td>{{ visit.patient_name }}</td>
+<!--            <td>{{ visit.date.strftime('%d.%m.%Y %H:%M') }}</td>-->
+            <td>{{ visit.date.strftime('%d.%m.%Y') }}</td>
+            <td>{{ visit.doctor.doctor_name }}</td>
+            <td>{{ visit.price.price }}</td>
+            <td>{{ visit.service.name }}</td>
         </tr>
     {% endfor %}
 </table>
-<div>
-    <a href="{{ url_for('reception.add_appoint') }}">Dodaj wizytę</a>
-</div>
-<div><a href="{{ url_for('reception.search_data') }}">Szukaj</a></div>
+
 {% endblock %}

@@ -1,44 +1,115 @@
 {% extends 'base.html' %}
 
 {% block header %}
-    <h1>{% block title %}Wizyty{% endblock %}</h1>
+<h1>{% block title %}Wizyty{% endblock %}</h1>
 {% endblock %}
 
 {% block content %}
 
+<!--
 <div class="links">
     <a href="{{ url_for('index') }}">Strona główna</a>
 </div>
-<div class="calendar">
-   <h2>Metoda GET</h2>
-    <form method="get">
-        <label for="start">Data początkowa:</label>
-        <input type="date" name="start_date" value="{{ start_date }}">
-        
-        <label for="start">Data końcowa:</label>
-        <input type="date" name="end_date" value="{{ end_date }}">
-        
-        <label for="name">Imię i nazwisko:</label>
-        <input type="text" name="name" value="{{ name }}">
-        <input type="submit" value="Szukaj">
-    </form>
+-->
+<!--  Wyszukaj Pacjentów  -->
+<div class="container">
+    <div class="row">
+        <div class="card col-md-9">
+            <h5 class="card-header">Wyszukaj pacjentów</h5>
+            <div class="card-body">
+            <form name="myform" method="get">
+                <div class="form-row">
+                    <div class="col-md-5">
+                        <label for="start">Data początkowa:</label>
+                        <input type="date" name="start_date" value="{{ start_date }}" placeholder="Data początkowa">
+                    </div>
+                    <div class="col">
+                        <label for="start">Data końcowa:</label>
+                        <input type="date" name="end_date" value="{{ end_date }}">
+                    </div>
+                </div>
+                <div class="form-row">                    
+                    <div class="col-md-4">
+                        <label for="name">Pacjent:</label>
+                        <input list="name" name="name" value="{{name}}" placeholder="Pacjent">
+                        <datalist id="name">
+                            {% for visit in visits %}
+                            <option value="{{ visit.patient_name }}">
+                                {% endfor %}
+                        </datalist>
+                    </div>
+                    <div class="col-md-4">
+                        <label for="doctor">Specjalista:</label>
+                        <input list="doctor" name="doctor" value="{{ doctor }}">
+                        <datalist id="doctor">
+                            {% for visit in visits %}
+                            <option value="{{ visit.doctor.doctor_name }}">
+                            {% endfor %}
+                        </datalist>
+                    </div>
+                    <div class="col-md-4">
+                        <label for="doctor">Specjalista:</label>
+                        <input list="doctor" name="doctor" value="{{ doctor }}">
+                        <datalist id="doctor">
+                            {% for visit in visits %}
+                            <option value="{{ visit.doctor.doctor_name }}">
+                            {% endfor %}
+                        </datalist>
+                    </div>
+                </div>
+                <div class="form-group">
+
+                </div>
+
+                <input type="submit" value="Szukaj">
+            </form>
+            </div>
+        </div>
+
+    </div>
+    <div class="spacer"></div>
+    <div class="row">
+
+        <table class="table table-striped">
+            <tr>
+                <td>Lp.</td>
+                <td>Imię i nazwisko</td>
+                <td>Data</td>
+                <td>Specjalista</td>
+                <td>Forma płatności</td>
+                <td>Rodzaj usługi</td>
+            </tr>
+            {% for visit in visits %}
+            <tr>
+                <td>{{ loop.index0 + 1 }}</td>
+                <td>{{ visit.patient_name }}</td>
+                <td>{{ visit.date.strftime('%H:%M %d.%m.%Y') }}</td>
+                <td>{{ visit.doctor.doctor_name }}</td>
+                <td>{{ visit.price.price }}</td>
+                <td>{{ visit.service.name }}</td>
+
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
 </div>
 
-<table>
-    <tr>
-        <th>Lp.</th>
-        <th>Imię i nazwisko</th>
-        <th>Data</th>
-    </tr>
-    {% for visit in visits %}
-        <tr>
-            <td>{{ loop.index0 }}</td>
-            <td>{{ visit.name }}</td>
-            <td>{{ visit.date.strftime('%H:%M %d.%m.%Y') }}</td>
-            <td>{{ visit.date }}</td>
-            
-        </tr>
-    {% endfor %}
-</table>
+<div class="container">
+    <h3>Informacje</h3>
+    <div class="row">
+        <div class="col-md-3">
 
+            <table class="table table-hover">
+                <tr>
+                    <td>Suma pacjentów</td>
+                    <td>{{ patient_sum }}</td>
+                </tr>
+                <tr>
+                    <td>Suma przychodu</td>
+                    <td>{{ revenue }}</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>
 {% endblock %}

@@ -1,14 +1,117 @@
 {% extends 'base.html' %}
 
 {% block header %}
-    <h1>{% block title %}Nowa wizyta{% endblock %}</h1>
+<h1>{% block title %}Nowa wizyta{% endblock %}</h1>
 {% endblock %}
 
 
 {% block content %}
-    <form method="post">
-        <label for="title">Imię i nazwisko</label>
-        <input name="name" id="name" value="{{ request.form['name'] }}" required>
-        <input type="submit" value="Save">
-    </form>
+<div class="container">
+    <div class="card">
+        <h4 class="card-header">Wyszukaj usługę</h4>
+        <!--    formmularz wyszukania specjalisty   -->
+        <div class="card-body">
+
+            <form method="get">
+                <div class="form-row">
+                    <div class="col-md-4">
+                        <input list="doctor_name" class="form-control" name="doctor_name" value="{{ doctor or Specjalista}}" placeholder="Specjalista">
+                        <datalist id="doctor_name">
+                            {% for data in data_doctor %}
+                            <option value="{{ data.doctor_name }}">
+                                {% endfor %}
+                        </datalist>
+                    </div>
+                    <div class="col-md-3">
+
+                        <input list="service" class="form-control" name="service" value="{{ service or ''}}" placeholder="Usługa">
+                        <datalist id="service">
+                            {% for data in data_service %}
+                            <option value="{{ data.name }}">
+                                {% endfor %}
+                        </datalist>
+                    </div>
+                    <div class="col-md-1">
+                        <input type="submit" value="Szukaj" class="btn btn-success">
+                    </div>
+                    <div class="col-md-1">
+                        <a href="{{ url_for('reception.add_appoint') }}" class="btn btn-primary">Wyczyść</a>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<div class="spacer"></div>
+<!--  Formularz dodawania wizyty  -->
+<div class="container">
+    <div class="row">
+        <!--        <div class="col-md-6 offset-md-3">-->
+        <div class="col-md-6">
+            <div class="card">
+                <h4 class="card-header">Dodaj wizytę</h4>
+                <form method="post">
+                    <div class="form-group col-md-12">
+                        <label for="title">Imię i nazwisko</label>
+                        <input name="patient_name" class="form-control" id="patient_name" value="" required>
+
+                    </div>
+                    <div class="form-group col-md-12">
+                        <label for="doctor">Specjalista</label>
+                        <input name="name" class="form-control" value="{{ doctor or '' }}">
+                    </div>
+                    <div class="form-group col-md-12">
+                        <label for="service">Usługa</label>
+                        <input type="text" class="form-control" id="service" value="{{ service or '' }}">
+                    </div>
+                    <div class="form-group col-md-12">
+                        <label for="service">Cena</label>
+                        {% if data %}
+                        <input type="text" id="service" class="form-control" value="{{ data.price.price }} zł">
+                        {% else %}
+                        <input type="text" id="service" class="form-control" value="Brak usługi">
+                        {% endif %}
+                    </div>
+                    <div class="form-group col-md-12">
+                        <input type="submit" value="Zapisz">
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
 {% endblock %}
+
+<!-- stary formularz  -->
+
+<!--  Formularz dodawania wizyty  -->
+<h3>Dodaj wizytę</h3>
+<form method="post">
+    <div class="form-group col-md-6">
+        <label for="title">Imię i nazwisko</label>
+        <input name="patient_name" class="form-control" id="patient_name" value="" required>
+
+    </div>
+    <div class="form-group col-md-6">
+        <label for="doctor">Specjalista</label>
+        <input name="name" class="form-control" value="{{ doctor or '' }}">
+    </div>
+    <div class="form-group col-md-6">
+        <label for="service">Usługa</label>
+        <input type="text" class="form-control" id="service" value="{{ service or '' }}">
+    </div>
+    <div class="form-group col-md-6">
+        <label for="service">Cena</label>
+        {% if data %}
+        <input type="text" id="service" class="form-control" value="{{ data.price.price }} zł">
+        {% else %}
+        <input type="text" id="service" class="form-control" value="Brak usługi">
+        {% endif %}
+    </div>
+    <div class="form-group col-md-6">
+        <input type="submit" value="Zapisz">
+    </div>
+
+</form>
