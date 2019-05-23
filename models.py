@@ -11,7 +11,7 @@ metadata = Base.metadata
 class Appointment(Base):
     __tablename__ = 'appointment'
 
-    id = Column(Integer, primary_key=True)
+    id = Column(Integer, primary_key=True, autoincrement=True)
     date = Column(DateTime, server_default=func.now())
     patient_name = Column(String(50), nullable=False)
     doctor_id = Column(ForeignKey('doctor.id'), nullable=False, index=True)
@@ -20,7 +20,7 @@ class Appointment(Base):
     custom_price = Column(Numeric(10,2))
     payment = Column(String(30), nullable=False)
     referral = Column(Integer)
-    referral_accepted = Column(Boolean)
+    referral_accepted = Column(String(2))
     pzu = Column(Integer)
 
     doctor = relationship('Doctor')

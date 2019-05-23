@@ -1,0 +1,79 @@
+{% extends 'base.html' %}
+
+{% block header %}
+<h1>{% block title %}Edytuj wizytę{% endblock %}</h1>
+{% endblock %}
+
+{% block content %}
+
+<div class="spacer"></div>
+<!--  Formularz dodawania wizyty  -->
+<div class="container">
+    <div class="row">
+        <!--        <div class="col-md-6 offset-md-3">-->
+        <div class="col-md-6">
+            <div class="card">
+                <h4 class="card-header">Edytuj wizytę</h4>
+                <form method="post">
+                   
+                    <div class="form-group col-md-12">
+                        <label for="title">Imię i nazwisko</label>
+                        <input name="patient_name" class="form-control" id="patient_name" value="{{ data.patient_name }}" required>
+                    </div>
+                    
+                    <div class="form-group col-md-12">
+                        <label for="doctor">Specjalista</label>
+                        <input name="doctor" class="form-control" value="{{ data.doctor.doctor_name }}">
+                    </div>
+                    
+                    <div class="form-group col-md-12">
+                        <label for="service">Usługa</label>
+                        <input type="text" class="form-control" name="service" value="{{ data.service.name or '' }}">
+                    </div>
+                    
+                    {% if data.payment == 'G' or data.payment == 'K' %}
+                    <div class="form-group col-md-12">
+                        <label for="service">Cena</label>
+                        {% if data.payment != 'Medicover' %}
+                        <input type="text" id="service" class="form-control" value="{{ data.price.price }} zł">
+                        {% else %}
+                        <input type="text" id="service" class="form-control" value="Nie dotyczy">
+                        {% endif %}
+                    </div>
+                    <div class="form-group col-md-12">
+                        <label for="custom_price">Cena niestandardowa</label>
+                        <input type="text" class="form-control" name="custom_price" value="{{ data.custom_price or 'Brak' }}">
+                    </div>
+                    <div class="form-group col-md-12">
+                        <label for="payment">Forma płatności</label><br>
+                        <input type="radio" name="payment" value="G" {% if data.payment == 'G' %} checked {% endif %}> Gotówka <br>
+                        <input type="radio" name="payment" value="K" {% if data.payment == 'K' %} checked {% endif %}> Karta <br>
+                    </div>
+                    {% endif %}
+                    
+                    {% if data.payment == 'Medicover' %}
+                    <div class="form-group col-md-12">
+                        <label for="referral">Numer skierowania</label>
+                        <input type="text" class="form-control" name="referral" value="{{ data.referral or '' }}">
+                    </div>
+
+                    <div class="form-group col-md-12">
+                        <label for="referral_accepted">Skierowanie zaakceptowane</label><br>
+                        <input type="radio" name="referral_accepted" value="1" {% if data.referral_accepted == '1' %} checked {% endif %}> Tak <br>
+                        <input type="radio" name="referral_accepted" value="0"{% if data.referral_accepted == '0' %} checked {% endif %}> Nie <br>
+                    </div>
+                    {% endif %}
+                    
+                    
+                    <div class="form-group col-md-12">
+                        <input type="submit" value="Zapisz">
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{{ data.payment }}
+
+{% endblock %}

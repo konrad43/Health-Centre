@@ -7,7 +7,7 @@
     border-right: 1px solid #e8e8e8;
 /*    background-color: #c7d4ea;*/
     padding-top: 2em;
-    height: 1000px;
+/*    height: 800px;*/
     position: sticky;
     position: -webkit-sticky;
     top: 50px;
@@ -37,8 +37,16 @@ ul .nav-item :hover {
     color: aliceblue;
     background-color: #ddd;
 }
-/*
-.content-base {
-    overflow: scroll;
-    height: 1000px;
-}*/
+
+.nav-tabs {
+    margin-top: 20px;
+    margin-bottom: 10px;
+}
+
+.nav-tabs .nav-item {
+    border-bottom: none;
+}
+
+.nav-tabs .nav-item .active {
+    color: aliceblue;
+}

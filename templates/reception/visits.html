@@ -2,6 +2,7 @@
 
 {% block content %}
 {% block header %}
+   <div class="spacer" style="margin-bottom: 1em;"></div>
     <h1>{% block title %}Wizyty{% endblock %}</h1>
 {% endblock %}
 
@@ -14,6 +15,8 @@
         <td>Specjalista</td>
         <td>Cena</td>
         <td>Rodzaj usługi</td>
+        <td>Forma płatności</td>
+        <td>Czy przeszło</td>
     </tr>
     {% for visit in visits %}
         <tr>
@@ -24,6 +27,12 @@
             <td>{{ visit.doctor.doctor_name }}</td>
             <td>{{ visit.price.price }}</td>
             <td>{{ visit.service.name }}</td>
+            <td>{{ visit.payment }}</td>
+            <td>{% if not visit.referral_accepted %} Nie dotyczy
+               {% else %}
+               {{ visit.referral_accepted }} {% endif %}
+            </td>
+            <td><a href="/{{ visit.id }}" class="btn btn-warning">Edytuj</a></td>
         </tr>
     {% endfor %}
 </table>

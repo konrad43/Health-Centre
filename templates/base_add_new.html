@@ -1,0 +1,54 @@
+<div class="container">
+
+<!-- tabs -->
+<ul class="nav nav-tabs">
+  <li class="nav-item">
+    <a class="nav-link {% if tab == 'commercial' %} active bg-success {% endif %}" 
+    href="{{ url_for('reception.add_commercial') }}">Komercyjny</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link {% if tab == 'medicover' %} active bg-success {% endif %}" 
+    href="{{ url_for('reception.add_medicover') }}">Medicover</a>
+  </li>
+    <li class="nav-item">
+    <a class="nav-link {% if tab == 'pzu' %} active bg-success {% endif %}" href="{{ url_for('reception.add_pzu') }}">PZU</a>
+  </li>
+</ul>
+</div>
+
+<div class="container">
+    <div class="card">
+        <h4 class="card-header">Wyszukaj usługę</h4>
+        <!--    formmularz wyszukania specjalisty   -->
+        <div class="card-body">
+
+            <form method="get">
+                <div class="form-row">
+                    <div class="col-md-4">
+                        <input list="doctor_name" class="form-control" name="doctor_name" value="{{ doctor or Specjalista}}" placeholder="Specjalista">
+                        <datalist id="doctor_name">
+                            {% for data in data_doctor %}
+                            <option value="{{ data.doctor_name }}">
+                                {% endfor %}
+                        </datalist>
+                    </div>
+                    <div class="col-md-3">
+
+                        <input list="service" class="form-control" name="service" value="{{ service or ''}}" placeholder="Usługa">
+                        <datalist id="service">
+                            {% for data in data_service %}
+                            <option value="{{ data.name }}">
+                                {% endfor %}
+                        </datalist>
+                    </div>
+                    <div class="col-md-1">
+                        <input type="submit" value="Szukaj" class="btn btn-success">
+                    </div>
+                    <div class="col-md-1">
+                        <a href="{{ url_for('reception.add_commercial') }}" class="btn btn-primary">Wyczyść</a>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

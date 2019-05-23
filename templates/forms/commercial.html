@@ -1,0 +1,52 @@
+
+<div class="spacer"></div>
+<!--  Formularz dodawania wizyty  -->
+<div class="container">
+    <div class="row">
+        <!--        <div class="col-md-6 offset-md-3">-->
+        <div class="col-md-6">
+            <div class="card">
+                <h4 class="card-header">Dodaj wizytę</h4>
+                <form method="post">
+                   
+                    <div class="form-group col-md-12">
+                        <label for="title">Imię i nazwisko</label>
+                        <input name="patient_name" class="form-control" id="patient_name" value="" required>
+                    </div>
+                    
+                    <div class="form-group col-md-12">
+                        <label for="doctor">Specjalista</label>
+                        <input name="doctor" class="form-control" value="{{ doctor or '' }}">
+                    </div>
+                    
+                    <div class="form-group col-md-12">
+                        <label for="service">Usługa</label>
+                        <input type="text" class="form-control" name="service" value="{{ service or '' }}">
+                    </div>
+                    
+                    <div class="form-group col-md-12">
+                        <label for="service">Cena</label>
+                        {% if data %}
+                        <input type="text" id="service" class="form-control" value="{{ data.price }} zł">
+                        {% else %}
+                        <input type="text" id="service" class="form-control" value="Brak usługi">
+                        {% endif %}
+                    </div>
+                    <div class="form-group col-md-12">
+                        <label for="custom_price">Cena niestandardowa</label>
+                        <input type="text" class="form-control" name="custom_price">
+                    </div>
+                    <div class="form-group col-md-12">
+                        <label for="payment">Forma płatności</label><br>
+                        <input type="radio" name="payment" value="G" checked> Gotówka <br>
+                        <input type="radio" name="payment" value="K"> Karta <br>
+                    </div>
+                    <div class="form-group col-md-12">
+                        <input type="submit" value="Zapisz">
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
