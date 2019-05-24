@@ -32,6 +32,9 @@
                         <li class="nav-item {% if page == 'add' %} active {% endif %}">
                             <a class="nav-link" href="{{ url_for('reception.add_commercial') }}">Dodaj wizytę</a>
                         </li>
+                        <li class="nav-item {% if page == 'price' %} active {% endif %}">
+                            <a class="nav-link" href="{{ url_for('reception.pricelist') }}">Cennik</a>
+                        </li>
                     </ul>
                 </div>
             </div>

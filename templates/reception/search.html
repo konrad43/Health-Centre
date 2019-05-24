@@ -6,11 +6,6 @@
 
 {% block content %}
 
-<!--
-<div class="links">
-    <a href="{{ url_for('index') }}">Strona główna</a>
-</div>
--->
 <!--  Wyszukaj Pacjentów  -->
 <div class="container">
     <div class="row">
@@ -28,19 +23,21 @@
                         <input type="date" name="end_date" value="{{ end_date }}">
                     </div>
                 </div>
-                <div class="form-row">                    
+                <div class="form-row"> 
+<!--                   Patient name                   -->
                     <div class="col-md-4">
-                        <label for="name">Pacjent:</label>
-                        <input list="name" name="name" value="{{name}}" placeholder="Pacjent">
+                        <label for="name">Pacjent</label>
+                        <input list="name" name="name" value="{{name}}" placeholder="Wybierz pacjenta">
                         <datalist id="name">
                             {% for visit in visits %}
                             <option value="{{ visit.patient_name }}">
                                 {% endfor %}
                         </datalist>
                     </div>
+<!--                    Doctor name   -->
                     <div class="col-md-4">
-                        <label for="doctor">Specjalista:</label>
-                        <input list="doctor" name="doctor" value="{{ doctor }}">
+                        <label for="doctor">Specjalista</label>
+                        <input list="doctor" name="doctor" value="{{ doctor }}" placeholder="Wybierz specjalistę">
                         <datalist id="doctor">
                             {% for visit in visits %}
                             <option value="{{ visit.doctor.doctor_name }}">
@@ -48,11 +45,11 @@
                         </datalist>
                     </div>
                     <div class="col-md-4">
-                        <label for="doctor">Specjalista:</label>
-                        <input list="doctor" name="doctor" value="{{ doctor }}">
-                        <datalist id="doctor">
+                        <label for="doctor">Forma płatności</label>
+                        <input list="payment" name="payment" value="{{ payment }}" placeholder="Wybierz formę płatności">
+                        <datalist id="payment">
                             {% for visit in visits %}
-                            <option value="{{ visit.doctor.doctor_name }}">
+                            <option value="{{ visit.payment }}">
                             {% endfor %}
                         </datalist>
                     </div>
@@ -60,10 +57,28 @@
                 <div class="form-group">
 
                 </div>
-
-                <input type="submit" value="Szukaj">
+                <div class="form-row">
+                   <div class="col-md-2">
+                    <input class="btn btn-success" type="submit" value="Szukaj">
+                   </div>
+                    <a href="{{ url_for('reception.search_data') }}" class="btn btn-primary">Wyczyść</a>
+                </div>
             </form>
             </div>
+        </div>
+        <div class="card col-md-3">
+            <h5 class="card-header">Informacje</h5>
+
+            <table class="table table-hover card-body">
+                <tr>
+                    <td>Suma pacjentów</td>
+                    <td>{{ patient_sum }}</td>
+                </tr>
+                <tr>
+                    <td>Suma przychodu</td>
+                    <td>{{ revenue }}</td>
+                </tr>
+            </table>
         </div>
 
     </div>
@@ -77,7 +92,9 @@
                 <td>Data</td>
                 <td>Specjalista</td>
                 <td>Forma płatności</td>
+                <td>Cena</td>
                 <td>Rodzaj usługi</td>
+                <td>Edytuj</td>
             </tr>
             {% for visit in visits %}
             <tr>
@@ -85,31 +102,14 @@
                 <td>{{ visit.patient_name }}</td>
                 <td>{{ visit.date.strftime('%H:%M %d.%m.%Y') }}</td>
                 <td>{{ visit.doctor.doctor_name }}</td>
+                <td>{{ visit.payment }}</td>
                 <td>{{ visit.price.price }}</td>
                 <td>{{ visit.service.name }}</td>
-
+                <td><a href="/{{ visit.id }}" class="btn btn-info">Edytuj</a></td>
             </tr>
             {% endfor %}
         </table>
     </div>
 </div>
 
-<div class="container">
-    <h3>Informacje</h3>
-    <div class="row">
-        <div class="col-md-3">
-
-            <table class="table table-hover">
-                <tr>
-                    <td>Suma pacjentów</td>
-                    <td>{{ patient_sum }}</td>
-                </tr>
-                <tr>
-                    <td>Suma przychodu</td>
-                    <td>{{ revenue }}</td>
-                </tr>
-            </table>
-        </div>
-    </div>
-</div>
 {% endblock %}

@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    {% block header %}
+        <h1>{% block title %}Cennik{% endblock %}</h1>
+    {% endblock %}
+
+
+{% include 'base_add_new.html' %}
+
+<!--Pricelist table-->
+<table class="table table-striped">
+    <tr>
+        <td>Lp.</td>
+        <td>Specjalista</td>
+        <td>Rodzaj usługi</td>
+        <td>Cena</td>
+        <td>Edytuj</td>
+    </tr>
+    {% for p in price %}
+        <tr>
+            <td>{{ loop.index0 + 1 }}</td>
+            <td>{{ p.doctor.doctor_name }}</td>
+            <td>{{ p.service.name }}</td>
+            <td>{{ p.price }}</td>
+            <td><a href="/cennik/{{ p.id }}" class="btn btn-info">Edytuj</a></td>
+        </tr>
+    {% endfor %}
+</table>
+
+
+{% endblock %}

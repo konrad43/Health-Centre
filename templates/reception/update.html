@@ -23,12 +23,31 @@
                     
                     <div class="form-group col-md-12">
                         <label for="doctor">Specjalista</label>
-                        <input name="doctor" class="form-control" value="{{ data.doctor.doctor_name }}">
+                        <input list="doctor" class="form-control" name="doctor" value="{{ data.doctor.doctor_name}}" placeholder="Specjalista">
+                        <datalist id="doctor">
+                            {% for f in form.doctors %}
+                            <option value="{{ f.doctor_name }}">
+                                {% endfor %}
+                        </datalist>
                     </div>
                     
                     <div class="form-group col-md-12">
                         <label for="service">Usługa</label>
-                        <input type="text" class="form-control" name="service" value="{{ data.service.name or '' }}">
+                        <input list="service" class="form-control" name="service" value="{{ data.service.name}}" placeholder="Wybierz usługę">
+                        <datalist id="service">
+                            {% for f in form.services %}
+                            <option value="{{ f.name }}">
+                                {% endfor %}
+                        </datalist>
+                    </div>
+                    <div class="form-group col-md-12">
+                        <label for="payment">Forma płatności</label>
+                        <input list="payment" class="form-control" name="payment" value="{{ data.payment}}" placeholder="Wybierz formę płatności">
+                        <datalist id="payment">
+                            {% for f in form.payments %}
+                            <option value="{{ f.payment }}">
+                                {% endfor %}
+                        </datalist>
                     </div>
                     
                     {% if data.payment == 'G' or data.payment == 'K' %}
@@ -74,6 +93,5 @@
         </div>
     </div>
 </div>
-{{ data.payment }}
 
 {% endblock %}

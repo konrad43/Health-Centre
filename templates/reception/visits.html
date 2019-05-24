@@ -6,6 +6,7 @@
     <h1>{% block title %}Wizyty{% endblock %}</h1>
 {% endblock %}
 
+
 <!--table-hover-->
 <table class="table table-striped">
     <tr>
@@ -17,6 +18,7 @@
         <td>Rodzaj usługi</td>
         <td>Forma płatności</td>
         <td>Czy przeszło</td>
+        <td>Edytuj</td>
     </tr>
     {% for visit in visits %}
         <tr>
@@ -32,9 +34,13 @@
                {% else %}
                {{ visit.referral_accepted }} {% endif %}
             </td>
-            <td><a href="/{{ visit.id }}" class="btn btn-warning">Edytuj</a></td>
+            <td><a href="/{{ visit.id }}" class="btn btn-info">Edytuj</a></td>
         </tr>
     {% endfor %}
 </table>
 
+{% if not visits %}
+<h4>Brak wizyt</h4>
+<a href="{{ url_for('reception.add_commercial') }}" class="btn btn-success">Dodaj wizyty</a>
+{% endif %}
 {% endblock %}
