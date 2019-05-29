@@ -21,9 +21,9 @@ def create_app(test_config=None):
 
 
 
-    from . import db, reception
+    from . import db, reception, auth
     db.init_app(app)
-    # app.register_blueprint(auth.bp)
+    app.register_blueprint(auth.bp)
     app.register_blueprint(reception.bp)
 
     app.add_url_rule('/', endpoint='index')

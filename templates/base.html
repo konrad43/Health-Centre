@@ -13,8 +13,19 @@
 
 <body>
     <!--   navbar top  -->
-    <nav class="navbar navbar-light bg-success fixed-top">
+<!--    <nav class="navbar navbar-light bg-success fixed-top">-->
+    <nav class="navbar navbar-light fixed-top" style="background-color: #52a552">
         <a class="navbar-brand" href="{{ url_for('index') }}">Gedeon Recepcja</a>
+        <div class="float-right">
+            {% if g.user %}
+            <span>Witaj {{ g.user['username'] }}</span>
+            <a class="btn btn-primary" href="{{ url_for('auth.logout') }}">Wyloguj</a>
+            {% else %}
+            <a class="btn btn-primary" href="{{ url_for('auth.register') }}">Zarejestruj</a>
+            <a class="btn btn-outline-dark" href="{{ url_for('auth.login') }}">Zaloguj</a>
+            {% endif %}
+        </div>
+
     </nav>
     <!--    navbar left  -->
     <div class="nav-space"></div>
@@ -40,6 +51,16 @@
             </div>
             <!--  content  -->
             <div class="col-md-10 content-base">
+<div class="spacer"></div>
+                   
+                    {% for message in get_flashed_messages() %}
+                <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                    <div class="flash">{{ message }}</div>
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                    {% endfor %}
                 {% block content %}{% endblock %}
             </div>
         </div>

@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+{% block header %}
+<h1>{% block title %}Zaloguj{% endblock %}</h1>
+{% endblock %}
+
+{% block content %}
+<div class="spacer"></div>
+<div class="container">
+    <div class="col-md-4">
+        <div class="card">
+
+            <div class="card-header">Zaloguj się</div>
+            <div class="card-body">
+
+                <form method="post">
+                    <div class="form-group">
+
+                        <label for="username">Nazwa użytkownika</label>
+                        <input  class="form-control" name="username" id="username" required>
+                    </div>
+                    <div class="form-group">
+
+                        <label for="password">Hasło</label>
+                        <input  class="form-control" type="password" name="password" id="password" required>
+                    </div>
+                    <input class="btn btn-primary" type="submit" value="Zaloguj">
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -39,14 +39,24 @@ class PriceList(Base):
     doctor = relationship('Doctor')
     service = relationship('Service')
 
+
 class Service(Base):
     __tablename__ = 'service'
 
     id = Column(Integer, primary_key=True)
     name = Column(String(60), nullable=False)
 
+
 class Doctor(Base):
     __tablename__ = 'doctor'
 
     id = Column(Integer, primary_key=True)
     doctor_name = Column(String(50), nullable=False)
+
+
+class User(Base):
+    __tablename__ = 'user'
+
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    username = Column(String, nullable=False, unique=True)
+    password = Column(String, nullable=False)

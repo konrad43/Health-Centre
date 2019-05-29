@@ -61,7 +61,8 @@ def query_service(tab='commercial'):
                            service=service,
                            data=data,
                            page='add',
-                           tab=tab)
+                           tab=tab,
+                           form_clear='reception.add_' + tab)
 
 
 def date_to_datetime(form_name, timedelta=0):

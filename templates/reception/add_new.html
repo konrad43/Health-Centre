@@ -6,7 +6,9 @@
 
 
 {% block content %}
-{% include 'base_add_new.html' %}
+{% include 'components/add_new_tabs.html' %}
+{% include 'components/service_search.html' %}
+
 <div class="spacer"></div>
 <!--  Formularz dodawania wizyty  -->
 {% if data and tab == 'commercial' %}

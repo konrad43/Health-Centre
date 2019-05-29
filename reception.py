@@ -7,6 +7,7 @@ from sqlalchemy import func, and_
 
 from .db import db_session
 from .models import Base, Appointment, Service, Doctor, PriceList
+from .auth import login_required
 from .my_func import (
 FormQuery, get_doctor_service_and_price, query_service, date_to_datetime
 )
@@ -15,6 +16,7 @@ bp = Blueprint('reception', __name__)
 
 
 @bp.route('/', methods=('GET',))
+@login_required
 def index():
     start_date = date_to_datetime(None, 0)
     visits = (
@@ -28,6 +30,7 @@ def index():
 
 
 @bp.route('/<int:id>', methods=('GET', 'POST'))
+@login_required
 def update(id):
     data = (
         db_session.query(Appointment)
@@ -57,6 +60,7 @@ def update(id):
 
 
 @bp.route('/nowa-wizyta-komercyjna', methods=('GET', 'POST'))
+@login_required
 def add_commercial():
     if request.method == 'POST':
 
@@ -82,6 +86,7 @@ def add_commercial():
 
 
 @bp.route('/nowa-wizyta-medicover', methods=('GET', 'POST'))
+@login_required
 def add_medicover():
     if request.method == 'POST':
         new_form = request.form
@@ -101,6 +106,7 @@ def add_medicover():
 
 
 @bp.route('/nowa-wizyta-pzu', methods=('GET', 'POST'))
+@login_required
 def add_pzu():
     if request.method == 'POST':
         pass
@@ -119,10 +125,12 @@ def pricelist():
     pricelist = db_session.query(PriceList)
     return render_template('reception/pricelist.html', page='price',
                            price=pricelist, data_doctor=form_query.doctors,
-                           data_service=form_query.services)
+                           data_service=form_query.services,
+                           form_clear='reception.pricelist')
 
 
 @bp.route('/szukaj', methods=('GET', 'POST'))
+@login_required
 def search_data():
     if request.method == 'GET':
         name = request.args.get('name')

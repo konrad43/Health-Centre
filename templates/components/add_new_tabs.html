@@ -1,0 +1,17 @@
+<div class="container">
+
+<!-- tabs -->
+<ul class="nav nav-tabs">
+  <li class="nav-item">
+    <a class="nav-link {% if tab == 'commercial' %} active bg-success {% endif %}" 
+    href="{{ url_for('reception.add_commercial') }}">Komercyjny</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link {% if tab == 'medicover' %} active bg-success {% endif %}" 
+    href="{{ url_for('reception.add_medicover') }}">Medicover</a>
+  </li>
+    <li class="nav-item">
+    <a class="nav-link {% if tab == 'pzu' %} active bg-success {% endif %}" href="{{ url_for('reception.add_pzu') }}">PZU</a>
+  </li>
+</ul>
+</div>
