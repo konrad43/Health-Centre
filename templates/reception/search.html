@@ -39,8 +39,8 @@
                         <label for="doctor">Specjalista</label>
                         <input list="doctor" name="doctor" value="{{ doctor }}" placeholder="Wybierz specjalistę">
                         <datalist id="doctor">
-                            {% for visit in visits %}
-                            <option value="{{ visit.doctor.doctor_name }}">
+                            {% for f in form.doctors %}
+                            <option value="{{ f.doctor_name }}">
                             {% endfor %}
                         </datalist>
                     </div>
@@ -48,8 +48,8 @@
                         <label for="doctor">Forma płatności</label>
                         <input list="payment" name="payment" value="{{ payment }}" placeholder="Wybierz formę płatności">
                         <datalist id="payment">
-                            {% for visit in visits %}
-                            <option value="{{ visit.payment }}">
+                            {% for f in form.payments %}
+                            <option value="{{ f.payment }}">
                             {% endfor %}
                         </datalist>
                     </div>
