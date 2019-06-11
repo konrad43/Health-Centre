@@ -1,0 +1,10 @@
+# Virtualenv files
+/venv
+
+/.idea
+
+# Pycharm files
+/__pycache__
+
+# Database
+app_db.db
