@@ -15,25 +15,36 @@ class FormQuery:
             db_session.query(Appointment)
                 .group_by(Appointment.payment)
         )
+        self.doctor_id = None
+        self.service_id = None
 
+    def get_doctor_id(self, doctor):
+        self.doctor_id = (
+            db_session.query(Doctor.id)
+                .filter(Doctor.doctor_name.like(f'{doctor}'))
+        )
+        return self.doctor_id
 
-def get_doctor_service_and_price(new_form):
+    def get_service_id(self, service):
+        self.service_id = (
+            db_session.query(Service.id)
+                .filter(Service.name == service)
+        )
+        return self.service_id
 
-    doctor_id = (
-        db_session.query(Doctor.id)
-            .filter(Doctor.doctor_name == new_form['doctor'])
-    )
-    service_id = (
-        db_session.query(Service.id)
-            .filter(Service.name == new_form['service'])
-    )
-    price_id = (
-        db_session.query(PriceList.id).filter(and_(
-                PriceList.doctor_id == doctor_id,
-                PriceList.service_id == service_id)
-    ))
-
-    return dict(doctor_id=doctor_id, service_id=service_id, price_id=price_id)
+    def get_price_id(self):
+        if self.service_id and self.doctor_id:
+            price_id = (
+                db_session.query(PriceList.id).filter(and_(
+                    PriceList.doctor_id == self.doctor_id,
+                    PriceList.service_id == self.service_id)
+                ))
+            return price_id
+        else:
+            print('No doctor_id or service_id')
+            self.get_doctor_id()
+            self.get_service_id()
+            self.get_price_id()
 
 
 def query_service(tab='commercial'):
