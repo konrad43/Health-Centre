@@ -4,7 +4,7 @@ from flask import (
 from sqlalchemy import func, and_
 
 from .db import db_session
-from .models import Appointment, PriceList
+from .models import Appointment, PriceList, Doctor, Service
 from .auth import login_required
 from .my_func import FormQuery, query_service, date_to_datetime
 
@@ -123,6 +123,18 @@ def edit_pricelist():
 def pricelist():
     form_query = FormQuery()
     pricelist = db_session.query(PriceList)
+
+    doctor = request.args.get('doctor_name')
+    service = request.args.get('service')
+
+    if doctor:
+        doctor_id = form_query.get_doctor_id(doctor)
+        pricelist = pricelist.filter(PriceList.doctor_id == doctor_id)
+
+    if service:
+        service_id = form_query.get_service_id(service)
+        pricelist = pricelist.filter(PriceList.service_id == service_id)
+
     return render_template('reception/pricelist.html', page='price',
                            price=pricelist, data_doctor=form_query.doctors,
                            data_service=form_query.services,
