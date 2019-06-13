@@ -1,0 +1,46 @@
+<div class="spacer"></div>
+<div class="container">
+    <div class="row">
+        <div class="col-md-6">
+
+            <div class="card">
+                <h4 class="card-header">Dodaj nową cenę</h4>
+                <!--    formmularz wyszukania specjalisty   -->
+                <div class="card-body">
+
+                    <form method="post">
+                        <div class="form-row">
+
+                            <div class="form-group col-md-12">
+                                <label for="doctor">Specjalista</label>
+                                <input list="doctor_name" class="form-control" name="doctor_name" value="{{ doctor or Specjalista}}" placeholder="Specjalista">
+                                <datalist id="doctor_name">
+                                    {% for data in data_form.doctors %}
+                                    <option value="{{ data.doctor_name }}">
+                                        {% endfor %}
+                                </datalist>
+                            </div>
+
+                            <div class="form-group col-md-12">
+                                <label for="doctor">Nazwa usługi</label>
+                                <input list="service" class="form-control" name="service" value="{{ service or ''}}" placeholder="Usługa">
+                                <datalist id="service">
+                                    {% for data in data_form.services %}
+                                    <option value="{{ data.name }}">
+                                        {% endfor %}
+                                </datalist>
+                            </div>
+                            <div class="form-group col-md-12">
+                                <label for="doctor">Nowa cena</label>
+                                <input name="price" class="form-control" value="" placeholder="Nowa cena">
+                            </div>
+                            <div class="col-md-1">
+                                <input type="submit" value="Dodaj" class="btn btn-success">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

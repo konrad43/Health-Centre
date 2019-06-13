@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+    {% block hearder %}
+        <h1>{% block title %}Dodaj{% endblock %}</h1>
+    {% endblock %}
+{% include 'components/add_data_tabs.html' %}
+
+{% if tab == 'doctor' %}
+
+    {% include 'forms/add_doctor_form.html' %}
+
+{% elif tab == 'service' %}
+
+    {% include 'forms/add_service_form.html' %}
+
+{% elif tab == 'price' %}
+
+    {% include 'forms/add_price_form.html' %}
+
+{% endif %}
+
+{% endblock %}

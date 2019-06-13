@@ -1,0 +1,17 @@
+<div class="container">
+
+<!-- tabs -->
+<ul class="nav nav-tabs">
+  <li class="nav-item">
+    <a class="nav-link {% if tab == 'doctor' %} active bg-success {% endif %}" 
+    href="{{ url_for('add_data.add_doctor') }}">Nowy specjalista</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link {% if tab == 'service' %} active bg-success {% endif %}" 
+    href="{{ url_for('add_data.add_service') }}">Nowa usługa</a>
+  </li>
+    <li class="nav-item">
+    <a class="nav-link {% if tab == 'price' %} active bg-success {% endif %}" href="{{ url_for('add_data.add_price') }}">Nowa cena</a>
+  </li>
+</ul>
+</div>

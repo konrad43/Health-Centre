@@ -13,9 +13,9 @@
 
 <body>
     <!--   navbar top  -->
-<!--    <nav class="navbar navbar-light bg-success fixed-top">-->
+    <!--    <nav class="navbar navbar-light bg-success fixed-top">-->
     <nav class="navbar navbar-light fixed-top" style="background-color: #52a552">
-        <a class="navbar-brand" href="{{ url_for('index') }}">Gedeon Recepcja</a>
+        <a class="navbar-brand" href="{{ url_for('index') }}">Recepcja Przychodni</a>
         <div class="float-right">
             {% if g.user %}
             <span>Witaj {{ g.user['username'] }}</span>
@@ -31,6 +31,7 @@
     <div class="nav-space"></div>
     <div class="container-fluid">
         <div class="row">
+            <!--    left navbar       -->
             <div class="col-md-2 left-nav">
                 <div class="bar">
                     <ul class="nav flex-column">
@@ -46,21 +47,24 @@
                         <li class="nav-item {% if page == 'price' %} active {% endif %}">
                             <a class="nav-link" href="{{ url_for('reception.pricelist') }}">Cennik</a>
                         </li>
+                        <li class="nav-item {% if page == 'add_doctor' %} active {% endif %}">
+                            <a class="nav-link" href="{{ url_for('add_data.add_doctor') }}">Dodaj</a>
+                        </li>
                     </ul>
                 </div>
             </div>
             <!--  content  -->
             <div class="col-md-10 content-base">
-<div class="spacer"></div>
-                   
-                    {% for message in get_flashed_messages() %}
+                <div class="spacer"></div>
+
+                {% for message in get_flashed_messages() %}
                 <div class="alert alert-warning alert-dismissible fade show" role="alert">
                     <div class="flash">{{ message }}</div>
                     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                    {% endfor %}
+                {% endfor %}
                 {% block content %}{% endblock %}
             </div>
         </div>

@@ -1,11 +1,11 @@
 {% extends 'base.html' %}
 
+{% block content %}
+
 {% block header %}
 <h1>{% block title %}Nowa wizyta{% endblock %}</h1>
 {% endblock %}
 
-
-{% block content %}
 {% include 'components/add_new_tabs.html' %}
 {% include 'components/service_search.html' %}
 
@@ -17,6 +17,8 @@
     {% include 'forms/medicover.html' %}
 {% elif data and tab == 'pzu' %}
     jeszcze nie ma
+{% elif not data %}
+    Brak powyższej konfiguracji w cenniku
 {% endif %}
 {% endblock %}
 

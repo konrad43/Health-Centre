@@ -1,13 +1,15 @@
 import datetime
 
-from flask import request, render_template
+from flask import request, render_template, flash
 from sqlalchemy import func, and_
 
 from .db import db_session
 from .models import Appointment, Service, Doctor, PriceList
 
+
 class FormQuery:
     """Get queries and returns data structure"""
+
     def __init__(self):
         self.doctors = db_session.query(Doctor)
         self.services = db_session.query(Service)
@@ -56,15 +58,18 @@ def query_service(tab='commercial'):
     data_doctor = db_session.query(Doctor)
 
     if doctor and service:
-        doc_id = data_doctor.filter(Doctor.doctor_name == doctor).first()
-        ser_id = data_service.filter(Service.name == service).first()
-        data = (
-            db_session.query(PriceList)
-                .filter(and_(
-                PriceList.doctor_id == doc_id.id,
-                PriceList.service_id == ser_id.id
-            )).first()
-        )
+        try:
+            doc_id = data_doctor.filter(Doctor.doctor_name == doctor).first()
+            ser_id = data_service.filter(Service.name == service).first()
+            data = (
+                db_session.query(PriceList)
+                    .filter(and_(
+                    PriceList.doctor_id == doc_id.id,
+                    PriceList.service_id == ser_id.id
+                )).first()
+            )
+        except AttributeError:
+            flash('Brak podanej konfiguracji w cenniku')
     return render_template('reception/add_new.html',
                            data_doctor=data_doctor,
                            data_service=data_service,
@@ -77,7 +82,6 @@ def query_service(tab='commercial'):
 
 
 def date_to_datetime(form_name, timedelta=0):
-
     date = request.args.get(form_name)
     print('date: ', date)
     print('date type: ', type(date))
@@ -92,5 +96,6 @@ def date_to_datetime(form_name, timedelta=0):
                              date[1],
                              date[2]).strftime('%s')
 
+
 def list_date(date):
-    return list(map(int,date.split('-')))
+    return list(map(int, date.split('-')))
