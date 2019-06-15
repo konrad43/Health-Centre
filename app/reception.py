@@ -164,13 +164,13 @@ def search_data():
                     .filter(and_(
                     func.strftime('%s', Appointment.date) >= start_date,
                     func.strftime('%s', Appointment.date) <= end_date
-                ))
+                )).order_by(Appointment.date)
             )
         else:
             data = (
                 db_session.query(Appointment)
                     .filter(func.strftime('%s', Appointment.date) >= start_date)
-            )
+            ).order_by(Appointment.date)
 
         # Query patient name
         if name:

@@ -2,6 +2,11 @@
 # Pycharm files
 app/__pycache__/
 app/.idea/
+.idea/
 
 # Database
 app_db.db
+
+# Vitualenv
+venv/
+
