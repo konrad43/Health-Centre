@@ -1,6 +1,3 @@
-import os
-import tempfile
-
 import pytest
 
 from app import create_app
@@ -12,11 +9,6 @@ from app.models import User
 def app():
     app = create_app({'TESTING': True})
     return app
-
-#
-# @pytest.fixture
-# def client(app):
-#     return app.test_client()
 
 
 @pytest.fixture
@@ -47,11 +39,7 @@ def auth(client):
 
 @pytest.fixture
 def client(app):
-    db_fd, app.config['DATABASE'] = tempfile.mkstemp()
     client = app.test_client()
-
-    app.config['USERNAME'] = 'test'
-    app.config['PASSWORD'] = 'test'
 
     with app.app_context():
         if not db_session.query(User)\
@@ -64,7 +52,3 @@ def client(app):
             db_session.commit()
 
     yield client
-
-    os.close(db_fd)
-    os.unlink(app.config['DATABASE'])
-

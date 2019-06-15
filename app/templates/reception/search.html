@@ -99,10 +99,10 @@
             {% for visit in visits %}
             <tr>
                 <td>{{ loop.index0 + 1 }}</td>
-                <td>{{ visit.patient_name }}</td>
+                <td class="patient_search">{{ visit.patient_name }}</td>
                 <td>{{ visit.date.strftime('%H:%M %d.%m.%Y') }}</td>
-                <td>{{ visit.doctor.doctor_name }}</td>
-                <td>{{ visit.payment }}</td>
+                <td class="doctor_search">{{ visit.doctor.doctor_name }}</td>
+                <td class="payment_search">{{ visit.payment }}</td>
                 <td>{{ visit.price.price }}</td>
                 <td>{{ visit.service.name }}</td>
                 <td><a href="/{{ visit.id }}" class="btn btn-info">Edytuj</a></td>

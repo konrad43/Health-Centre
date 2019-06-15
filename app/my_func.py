@@ -83,15 +83,15 @@ def query_service(tab='commercial'):
 
 def date_to_datetime(form_name, timedelta=0):
     date = request.args.get(form_name)
-    print('date: ', date)
-    print('date type: ', type(date))
+    # print('date: ', date)
+    # print('date type: ', type(date))
 
     try:
         date = list_date(date)
     except (ValueError, AttributeError):
         date = datetime.datetime.now() - datetime.timedelta(days=timedelta)
         date = list_date(date.strftime('%Y-%m-%d'))
-        print('new date: ', date)
+        # print('new date: ', date)
     return datetime.datetime(date[0],
                              date[1],
                              date[2]).strftime('%s')
