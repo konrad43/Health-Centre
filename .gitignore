@@ -1,8 +1,7 @@
 
-.idea/
-
 # Pycharm files
-__pycache__/
+app/__pycache__/
+app/.idea/
 
 # Database
 app_db.db
